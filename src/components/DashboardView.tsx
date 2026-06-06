@@ -272,17 +272,64 @@ export const DashboardView: React.FC = () => {
           </div>
 
           {activeMetricTab === "revenue" ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div className="p-3 bg-[#090a0f]/50 border border-zinc-800 rounded-xl">
                 <span className="text-[10px] uppercase text-zinc-500 font-mono">Recaudación Proyectada Junio 2026</span>
                 <div className="text-lg font-bold text-[#4ade80] font-display mt-1">
                   ${currentRevenue.toLocaleString("es-AR")} ARS
                 </div>
               </div>
-              <div className="h-[100px] border-b border-zinc-800/40 relative">
-                <p className="text-[10px] text-zinc-400 absolute bottom-1 right-2">Permanencia Media: 9.3 meses</p>
-                <div className="w-full h-full bg-gradient-to-t from-[#22c55e]/10 to-transparent rounded" />
+              <div className="relative" style={{ height: '120px' }}>
+                <svg width="100%" height="100%" viewBox="0 0 300 100" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#22c55e" stopOpacity="0.3"/>
+                      <stop offset="100%" stopColor="#22c55e" stopOpacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  {(() => {
+                    const data = CHURN_HISTORY_DATA;
+                    if (data.length === 0) return null;
+                    const maxR = Math.max(...data.map(d => d.revenue));
+                    const minR = Math.min(...data.map(d => d.revenue));
+                    const range = maxR - minR || 1;
+                    const points = data.map((d, i) => {
+                      const x = (i / (data.length - 1)) * 280 + 10;
+                      const y = 90 - ((d.revenue - minR) / range) * 75;
+                      return `${x},${y}`;
+                    });
+                    const polyline = points.join(" ");
+                    const firstX = points[0].split(",")[0];
+                    const lastX = points[points.length - 1].split(",")[0];
+                    return (
+                      <>
+                        <polygon
+                          points={`${firstX},90 ${polyline} ${lastX},90`}
+                          fill="url(#revenueGrad)"
+                        />
+                        <polyline
+                          points={polyline}
+                          fill="none"
+                          stroke="#22c55e"
+                          strokeWidth="2"
+                          strokeLinejoin="round"
+                        />
+                        {data.map((d, i) => {
+                          const x = (i / (data.length - 1)) * 280 + 10;
+                          const y = 90 - ((d.revenue - minR) / range) * 75;
+                          return <circle key={i} cx={x} cy={y} r="3" fill="#22c55e" />;
+                        })}
+                      </>
+                    );
+                  })()}
+                </svg>
+                <div className="absolute bottom-0 left-0 right-0 flex justify-between px-2">
+                  {CHURN_HISTORY_DATA.map(d => (
+                    <span key={d.month} className="text-[8px] font-mono text-zinc-600">{d.month.split(" ")[0]}</span>
+                  ))}
+                </div>
               </div>
+              <p className="text-[10px] text-zinc-500 text-right font-mono">Permanencia media: 9.3 meses</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
