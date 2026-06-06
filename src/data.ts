@@ -31,13 +31,13 @@ export const FEE_STRUCTURE = {
 export const PRELOADED_MEMBERS: Member[] = [];
 
 export const WEEKLY_ATTENDANCE_DATA: DailyAttendance[] = [
-  { day: "Lunes", count: 0 },
-  { day: "Martes", count: 0 },
-  { day: "Miércoles", count: 0 },
-  { day: "Jueves", count: 0 },
-  { day: "Viernes", count: 0 },
-  { day: "Sábado", count: 0 },
-  { day: "Domingo", count: 0 }
+  { day: "Lunes", count: 48 },
+  { day: "Martes", count: 42 },
+  { day: "Miércoles", count: 55 },
+  { day: "Jueves", count: 39 },
+  { day: "Viernes", count: 64 },
+  { day: "Sábado", count: 28 },
+  { day: "Domingo", count: 8 }
 ];
 
 export const CHURN_HISTORY_DATA: ChurnMetric[] = [];
