@@ -211,28 +211,38 @@ export const DashboardView: React.FC = () => {
             <span className="text-[10px] text-[#4ade80] font-mono">Pico: Viernes (64)</span>
           </div>
 
-          <div className="flex items-end justify-between border-b border-zinc-800 pb-1 gap-1" style={{ height: '180px' }}>
-            {WEEKLY_ATTENDANCE_DATA.map((item) => {
-              const heightPx = Math.round((item.count / 70) * 140);
-              const isPeak = item.day === "Viernes";
-              const isSelected = selectedChartBar === item.day;
+          <div className="relative border-b border-zinc-800" style={{ height: '200px' }}>
+            <div className="absolute inset-0 flex items-end justify-around px-2 pb-6">
+              {WEEKLY_ATTENDANCE_DATA.map((item) => {
+                const maxCount = Math.max(...WEEKLY_ATTENDANCE_DATA.map(d => d.count), 1);
+                const heightPct = (item.count / maxCount) * 100;
+                const isPeak = item.count === maxCount;
+                const isSelected = selectedChartBar === item.day;
 
-              return (
-                <div
-                  key={item.day}
-                  className="flex flex-col items-center flex-1 cursor-pointer group justify-end h-full"
-                  onClick={() => setSelectedChartBar(isSelected ? null : item.day)}
-                >
+                return (
                   <div
-                    style={{ height: `${heightPx}px`, minHeight: '4px' }}
-                    className={`w-full rounded-t-lg transition-all ${
-                      isPeak ? "bg-gradient-to-t from-emerald-600 to-[#4ade80]" : "bg-zinc-700"
-                    } ${isSelected ? "ring-2 ring-[#22c55e]" : ""}`}
-                  />
-                  <span className="text-[10px] mt-2 font-mono text-zinc-500">{item.day.substring(0, 3)}</span>
-                </div>
-              );
-            })}
+                    key={item.day}
+                    className="flex flex-col items-center justify-end cursor-pointer"
+                    style={{ width: '12%', height: '100%' }}
+                    onClick={() => setSelectedChartBar(isSelected ? null : item.day)}
+                  >
+                    <div
+                      style={{ height: `${heightPct}%`, minHeight: '4px' }}
+                      className={`w-full rounded-t-lg transition-all duration-300 ${
+                        isPeak ? "bg-gradient-to-t from-emerald-600 to-[#4ade80]" : "bg-zinc-700"
+                      } ${isSelected ? "ring-2 ring-[#22c55e]" : ""}`}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 flex justify-around px-2">
+              {WEEKLY_ATTENDANCE_DATA.map((item) => (
+                <span key={item.day} className="text-[10px] font-mono text-zinc-500" style={{ width: '12%', textAlign: 'center' }}>
+                  {item.day.substring(0, 3)}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
