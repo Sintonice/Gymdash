@@ -40,7 +40,14 @@ export const WEEKLY_ATTENDANCE_DATA: DailyAttendance[] = [
   { day: "Domingo", count: 8 }
 ];
 
-export const CHURN_HISTORY_DATA: ChurnMetric[] = [];
+export const CHURN_HISTORY_DATA: ChurnMetric[] = [
+  { month: "Ene 2026", activeCount: 50, lostCount: 2, churnRate: 4.0, revenue: 720000 },
+  { month: "Feb 2026", activeCount: 52, lostCount: 3, churnRate: 5.7, revenue: 760000 },
+  { month: "Mar 2026", activeCount: 58, lostCount: 1, churnRate: 1.7, revenue: 840000 },
+  { month: "Abr 2026", activeCount: 60, lostCount: 4, churnRate: 6.6, revenue: 890000 },
+  { month: "May 2026", activeCount: 62, lostCount: 3, churnRate: 4.8, revenue: 910000 },
+  { month: "Jun 2026", activeCount: 65, lostCount: 2, churnRate: 3.1, revenue: 980050 }
+];
 
 export const INITIAL_AUDIT_LOGS = [
   {

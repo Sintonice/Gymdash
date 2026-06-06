@@ -222,10 +222,15 @@ export const DashboardView: React.FC = () => {
                 return (
                   <div
                     key={item.day}
-                    className="flex flex-col items-center justify-end cursor-pointer"
+                    className="flex flex-col items-center justify-end cursor-pointer relative"
                     style={{ width: '12%', height: '100%' }}
                     onClick={() => setSelectedChartBar(isSelected ? null : item.day)}
                   >
+                    {isSelected && (
+                      <div className="absolute bottom-full mb-1 bg-[#22c55e] text-[#090a0f] text-[10px] font-bold px-2 py-0.5 rounded whitespace-nowrap">
+                        {item.count} asist.
+                      </div>
+                    )}
                     <div
                       style={{ height: `${heightPct}%`, minHeight: '4px' }}
                       className={`w-full rounded-t-lg transition-all duration-300 ${
