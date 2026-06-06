@@ -211,21 +211,24 @@ export const DashboardView: React.FC = () => {
             <span className="text-[10px] text-[#4ade80] font-mono">Pico: Viernes (64)</span>
           </div>
 
-          <div className="flex items-end justify-between h-[180px] pt-6 relative border-b border-zinc-800 pb-1">
+          <div className="flex items-end justify-between border-b border-zinc-800 pb-1 gap-1" style={{ height: '180px' }}>
             {WEEKLY_ATTENDANCE_DATA.map((item) => {
-              const heightPercentage = Math.round((item.count / 70) * 100);
+              const heightPx = Math.round((item.count / 70) * 140);
               const isPeak = item.day === "Viernes";
               const isSelected = selectedChartBar === item.day;
 
               return (
                 <div
                   key={item.day}
-                  className="flex flex-col items-center flex-1 cursor-pointer group"
+                  className="flex flex-col items-center flex-1 cursor-pointer group justify-end h-full"
                   onClick={() => setSelectedChartBar(isSelected ? null : item.day)}
                 >
-                  <div style={{ height: `${heightPercentage}%` }} className={`w-8 rounded-t-lg transition-all ${
-                    isPeak ? "bg-gradient-to-t from-emerald-600 to-[#4ade80]" : "bg-zinc-800"
-                  } ${isSelected ? "ring-2 ring-[#22c55e]" : ""}`} />
+                  <div
+                    style={{ height: `${heightPx}px`, minHeight: '4px' }}
+                    className={`w-full rounded-t-lg transition-all ${
+                      isPeak ? "bg-gradient-to-t from-emerald-600 to-[#4ade80]" : "bg-zinc-700"
+                    } ${isSelected ? "ring-2 ring-[#22c55e]" : ""}`}
+                  />
                   <span className="text-[10px] mt-2 font-mono text-zinc-500">{item.day.substring(0, 3)}</span>
                 </div>
               );
